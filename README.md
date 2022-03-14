@@ -4,10 +4,20 @@ enron challenge
 # Step 1 - create the reverse index
 `python make_index.py <path to maildir>`
 
+
+```
+python make_index.py ~/Documents/maildir 
+Opened database successfully
+starting file:  /Users/hongjeon/Documents/maildir/arnold-j/notes_inbox/36.
+finishing file:  /Users/hongjeon/Documents/maildir/arnold-j/notes_inbox/36.
+starting file:  /Users/hongjeon/Documents/maildir/arnold-j/notes_inbox/19.
+finishing file:  /Users/hongjeon/Documents/maildir/arnold-j/notes_inbox/19
+...
+```
+
 # Step 2 - Create the trie
 `python make_trie.py <search term>`
 
-# Sample
 ```
 ----------------------matched words-----------------------------
 ['hi', 'his', 'hispanic', 'hist', 'history', 'historical', 'his/her', 'hit', 'hitting', 'hilipp=20', 'hilary', 'hillis/hou/ect@ect', 'him', 'high', 'highly', 'highlight', 'highlights', 'high-tech', 'high-technology', 'high-level', 'highway', 'higher', 'highs', 'hire', 'hired', 'hiring', 'hirko', 'hickey', 'hinges', 'hiatt', 'hiattf@washpostcom', 'hidden']
