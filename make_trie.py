@@ -53,6 +53,14 @@ def initialize_trie(conn):
     t = Trie()
     t.formTrie(keys)
     return t
+
+def find_docs(conn, words):
+    res = []
+    sql="select docId from wordToDoc where wordId in ({seq})".format(seq=','.join(['?']*len(words)))
+    rows = conn.execute(sql, words).fetchall()   
+    for row in rows:
+        res.append(row[0])
+    return res
  
 if __name__=="__main__":
     if len(sys.argv) < 2:
@@ -65,5 +73,12 @@ if __name__=="__main__":
         print(e)
     t = initialize_trie(conn)
     res = t.returnSuggestions(sys.argv[1])
+    print("----------------------matched words-----------------------------")
     print(res)
+    
+    print("----------------------documents-----------------------------")
+
+    docs = find_docs(conn, res)
+    print(docs)
+
  
