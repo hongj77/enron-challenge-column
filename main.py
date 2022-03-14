@@ -1,7 +1,7 @@
 import os
-import sys
 import sqlite3
 import pdb
+import sys, getopt
 
 def format_message_id(line):
     line = line.replace("Message-ID:", "")
@@ -58,7 +58,7 @@ def parse_file(conn, path):
     """
     # Skip to body of email. For each word, associate word -> doc_id.
     email_body = False
-    with open(path, 'r') as f:
+    with open(path, encoding='utf-8', errors='ignore') as f:
         lines = f.readlines()
         for line in lines:
             if line.startswith('Message-ID'):
@@ -71,16 +71,18 @@ def parse_file(conn, path):
                 continue
             process_body_line(conn, line, doc_id)
 
-def parse_files():
-    path = '/Users/hongjeon/projects/enron-challenge-column/data/maildir'
+def parse_files(conn, path):
     for root, subdirs, files in os.walk(path):
         for file in os.listdir(root):
             filePath = os.path.join(root, file)
             if os.path.isdir(filePath):
                 pass
             else:
-                # f = open(filePath, 'r')
-                print(filePath)
+                if not filePath.endswith('.'):
+                    continue
+                print("starting file: ", filePath)
+                parse_file(conn, filePath)
+                print("finishing file: ", filePath)
 
 def set_up_db():
     conn = sqlite3.connect('enron.db')
@@ -100,10 +102,14 @@ def set_up_db():
     return conn
 
 if __name__=="__main__":
+    if len(sys.argv) < 2:
+        print("Give the data path for the first argument.")
+        sys.exit()
+    filepath = sys.argv[1]
     try:
         conn = set_up_db()
     except Exception as e:
         print("Error initializing DB")
         print(e)
         
-    parse_file(conn, "/Users/hongjeon/projects/column/enron-challenge-column/data/skilling-j/all_documents/2.")
+    parse_files(conn, filepath)
