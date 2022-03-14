@@ -1,7 +1,9 @@
 import os
 import sqlite3
 import pdb
-import sys, getopt
+import sys
+import db
+
 
 def format_message_id(line):
     line = line.replace("Message-ID:", "")
@@ -107,7 +109,7 @@ if __name__=="__main__":
         sys.exit()
     filepath = sys.argv[1]
     try:
-        conn = set_up_db()
+        conn = db.set_up_db()
     except Exception as e:
         print("Error initializing DB")
         print(e)

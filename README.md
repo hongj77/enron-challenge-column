@@ -2,4 +2,7 @@
 enron challenge
 
 # Step 1 - create the reverse index
-# python main.py <path to maildir>
+`python reverse_index.py <path to maildir>`
+
+# Step 2 - Create the trie
+`python make_trie.py <search term>`
